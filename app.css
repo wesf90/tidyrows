@@ -65,6 +65,65 @@ body {
   accent-color: #00ddeb;
 }
 
+.help-icon {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: transform 0.3s ease;
+}
+
+.help-icon:hover {
+  transform: scale(1.2);
+}
+
+.help-section {
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.help-section.open {
+  max-height: 90vh; /* Increased to accommodate padding */
+  overflow-y: auto;
+}
+
+.help-content {
+  padding: 20px;
+  padding-top: 80px; /* Added padding to push content below header */
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.help-content h2,
+.help-content h3 {
+  color: #1e3c72;
+}
+
+.help-content p,
+.help-content li {
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.help-content ul,
+.help-content ol {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
 .main-content {
   display: flex;
   justify-content: center;
@@ -95,11 +154,10 @@ body {
 }
 
 .scroll-container {
-  max-height: 60vh; /* Moved from .formatted-window */
-  overflow-y: auto; /* Scrollbar inside this container */
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
-/* Custom scrollbar styling for the inner container */
 .scroll-container::-webkit-scrollbar {
   width: 8px;
 }
@@ -219,10 +277,14 @@ button:hover {
     padding: 20px;
   }
   .scroll-container {
-    max-height: 50vh; /* Adjusted for mobile */
+    max-height: 50vh;
   }
   .main-content {
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+  .help-content {
+    padding: 15px;
+    padding-top: 120px; /* Increased padding for mobile to account for taller header */
   }
 }

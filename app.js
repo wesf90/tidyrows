@@ -10,6 +10,9 @@ const sameLineCheckbox = document.getElementById('same-line');
 const rowsToFormatSelect = document.getElementById('rows-to-format');
 const instructions = document.getElementById('instructions');
 const pasteShortcut = document.getElementById('paste-shortcut');
+const helpPasteShortcut = document.getElementById('help-paste-shortcut');
+const helpToggle = document.getElementById('help-toggle');
+const helpSection = document.getElementById('help-section');
 const formattedWindow = document.getElementById('formatted-window');
 const formattedData = document.getElementById('formatted-data');
 const copyPlainBtn = document.getElementById('copy-plain');
@@ -28,11 +31,19 @@ let htmlText = '';
 // Detect if the user is on a Mac and update the paste shortcut text
 function updatePasteShortcut() {
   const isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.platform) || /Mac|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  pasteShortcut.textContent = isMac ? 'Cmd+V' : 'Ctrl+V';
+  const shortcutText = isMac ? 'Cmd+V' : 'Ctrl+V';
+  pasteShortcut.textContent = shortcutText;
+  helpPasteShortcut.textContent = shortcutText;
+}
+
+// Toggle the help section
+function toggleHelpSection() {
+  helpSection.classList.toggle('open');
 }
 
 // Run on page load
 updatePasteShortcut();
+helpToggle.addEventListener('click', toggleHelpSection);
 
 // Capture paste event anywhere on the page
 document.body.addEventListener('paste', (event) => {
