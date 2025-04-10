@@ -3,101 +3,187 @@
   Author: Wes Foster
   Author URL: https://wesfoster.com
 */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
   margin: 0;
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: #ffffff;
+  overflow: hidden;
 }
 
 .options {
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
   z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.options label {
+  color: #ffffff;
+  font-weight: 400;
+}
+
+.options input[type="text"],
+.options select {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #333333; /* Darker text color for readability */
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.3s ease;
+}
+
+.options input[type="text"]::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.options input[type="text"]:focus,
+.options select:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.options select option {
+  color: #333333; /* Ensure dropdown options are readable */
+  background: #ffffff;
+}
+
+.options input[type="checkbox"] {
+  accent-color: #00ddeb;
 }
 
 .main-content {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .container {
-  width: 80%;
-  max-width: 800px;
+  width: 90%;
+  max-width: 900px;
   text-align: center;
 }
 
 .instructions {
-  font-size: 18px;
-  color: #666;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .formatted-window {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 20px;
-  max-height: 80vh;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 25px;
+  max-height: 60vh;
   overflow-y: auto;
-  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 #formatted-data {
   text-align: left;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+}
+
+#formatted-data .key-value-pair {
+  margin-bottom: 20px; /* Space between key-value pairs */
+}
+
+#formatted-data .key-value-pair strong {
+  font-weight: 700; /* Force bold for keys */
+  color: #000000;
+  display: block; /* Ensure key is on its own line */
+}
+
+#formatted-data .key-value-pair span {
+  font-weight: normal; /* Ensure values are not bold */
+  color: #000000;
+  display: block; /* Ensure value is on its own line */
 }
 
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
 button {
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  background: linear-gradient(135deg, #00ddeb 0%, #0097e6 100%);
+  color: #ffffff;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #0097e6 0%, #00ddeb 100%);
+  transform: translateY(-2px);
 }
 
 .delete-btn {
-  background-color: #dc3545;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
 }
 
 .delete-btn:hover {
-  background-color: #c82333;
+  background: linear-gradient(135deg, #ee5253 0%, #ff6b6b 100%);
 }
 
 .footer {
-  background-color: #f0f0f0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   padding: 10px;
   text-align: center;
   z-index: 1000;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+}
+
+.footer a {
+  color: #00ddeb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #0097e6;
 }
 
 @media (max-width: 600px) {
   .options {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    padding: 20px;
   }
   .options label {
     width: 100%;
   }
-  .options input, .options select {
+  .options input,
+  .options select {
     width: 100%;
     box-sizing: border-box;
   }
@@ -106,9 +192,17 @@ button:hover {
   }
   .buttons button {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
   .container {
-    width: 90%;
+    width: 95%;
+  }
+  .formatted-window {
+    padding: 20px;
+    max-height: 50vh;
+  }
+  .main-content {
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
