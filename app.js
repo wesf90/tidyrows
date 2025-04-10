@@ -9,6 +9,7 @@ const separatorInput = document.getElementById('separator');
 const sameLineCheckbox = document.getElementById('same-line');
 const rowsToFormatSelect = document.getElementById('rows-to-format');
 const instructions = document.getElementById('instructions');
+const pasteShortcut = document.getElementById('paste-shortcut');
 const formattedWindow = document.getElementById('formatted-window');
 const formattedData = document.getElementById('formatted-data');
 const copyPlainBtn = document.getElementById('copy-plain');
@@ -23,6 +24,15 @@ let dataRows = [];
 let plainText = '';
 let markdownText = '';
 let htmlText = '';
+
+// Detect if the user is on a Mac and update the paste shortcut text
+function updatePasteShortcut() {
+  const isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.platform) || /Mac|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  pasteShortcut.textContent = isMac ? 'Cmd+V' : 'Ctrl+V';
+}
+
+// Run on page load
+updatePasteShortcut();
 
 // Capture paste event anywhere on the page
 document.body.addEventListener('paste', (event) => {
@@ -111,10 +121,15 @@ function formatData() {
         const value = row[index] || '';
         if (value.trim() === '') return '';
         const formattedValue = value.replace(/\n/g, '<br>');
-        return sameLine ? `<b>${header}</b>${separator}${formattedValue}` : `<b>${header}</b><br>${formattedValue}`;
+        return `
+          <div class="key-value-pair">
+            <strong>${header}</strong>
+            ${sameLine ? `${separator}${formattedValue}` : `<br>${formattedValue}`}
+          </div>
+        `;
       })
       .filter(line => line !== '')
-      .join('<br><br>');
+      .join('');
   }).join('<hr>');
 
   plainText = rows.map(row => {
