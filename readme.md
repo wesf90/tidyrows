@@ -1,6 +1,6 @@
 # TidyRows
 
-**TidyRows** is a lightweight, single-page web application designed to quickly format raw spreadsheet data into a clean, readable structure. Paste your tab-separated data (e.g., from Google Sheets or Excel), customize the formatting options, and copy the result as plain text, Markdown, or HTML. Perfect for transforming messy client data into polished outputs for tools like Google Docs, ClickUp, or anywhere else you need structured text.
+**TidyRows** (tinyrows.com) is a lightweight, single-page web application designed to quickly format raw spreadsheet data into a clean, readable structure. Paste your tab-separated data (e.g., from Google Sheets or Excel), customize the formatting options, and copy the result as plain text, Markdown, or HTML. Perfect for transforming messy client data into polished outputs for tools like Google Docs, ClickUp, or anywhere else you need structured text.
 
 Built by [Wes Foster](https://wesfoster.com).
 
