@@ -13,6 +13,7 @@ const formattedWindow = document.getElementById('formatted-window');
 const formattedData = document.getElementById('formatted-data');
 const copyPlainBtn = document.getElementById('copy-plain');
 const copyMarkdownBtn = document.getElementById('copy-markdown');
+const copyHtmlBtn = document.getElementById('copy-html');
 const copyFormattedBtn = document.getElementById('copy-formatted');
 const resetBtn = document.getElementById('reset');
 
@@ -32,17 +33,15 @@ document.body.addEventListener('paste', (event) => {
 
 // Parse pasted data and format it
 function parseAndFormat(data) {
-  // Split into rows, preserving newlines within cells by handling tab-separated data
   const rows = [];
   let currentRow = '';
   let inQuotes = false;
 
-  // Iterate through each character to handle quoted fields with newlines
   for (let i = 0; i < data.length; i++) {
     const char = data[i];
     if (char === '"') {
-      inQuotes = !inQuotes; // Toggle quote state
-      continue; // Skip the quote character itself
+      inQuotes = !inQuotes;
+      continue;
     }
     if (char === '\n' && !inQuotes) {
       if (currentRow.trim() !== '') {
@@ -53,7 +52,6 @@ function parseAndFormat(data) {
       currentRow += char;
     }
   }
-  // Add the last row if it’s not empty
   if (currentRow.trim() !== '') {
     rows.push(currentRow);
   }
@@ -63,7 +61,6 @@ function parseAndFormat(data) {
     return;
   }
 
-  // Split rows into headers and data, assuming tab-separated values
   headers = rows[0].split('\t');
   dataRows = rows.slice(1).map(row => {
     const cells = [];
@@ -82,7 +79,7 @@ function parseAndFormat(data) {
         currentCell += char;
       }
     }
-    cells.push(currentCell); // Add the last cell
+    cells.push(currentCell);
     return cells;
   });
 
@@ -103,49 +100,45 @@ function formatData() {
 
   let rows = [];
   if (rowsToFormat === 'last' && dataRows.length > 0) {
-    rows = [dataRows[dataRows.length - 1]]; // Last row only
+    rows = [dataRows[dataRows.length - 1]];
   } else if (rowsToFormat === 'all') {
-    rows = dataRows; // All rows
+    rows = dataRows;
   }
 
-  // Generate HTML format
   htmlText = rows.map(row => {
     return headers
       .map((header, index) => {
         const value = row[index] || '';
-        if (value.trim() === '') return ''; // Skip empty or whitespace-only values
-        const formattedValue = value.replace(/\n/g, '<br>'); // Preserve newlines in HTML
+        if (value.trim() === '') return '';
+        const formattedValue = value.replace(/\n/g, '<br>');
         return sameLine ? `<b>${header}</b>${separator}${formattedValue}` : `<b>${header}</b><br>${formattedValue}`;
       })
-      .filter(line => line !== '') // Remove empty lines
-      .join('<br><br>'); // Join non-empty lines with double break
+      .filter(line => line !== '')
+      .join('<br><br>');
   }).join('<hr>');
 
-  // Generate plain text format
   plainText = rows.map(row => {
     return headers
       .map((header, index) => {
         const value = row[index] || '';
-        if (value.trim() === '') return ''; // Skip empty or whitespace-only values
+        if (value.trim() === '') return '';
         return sameLine ? `${header}${separator}${value}` : `${header}\n${value}`;
       })
-      .filter(line => line !== '') // Remove empty lines
-      .join('\n\n'); // Join non-empty lines with double newline
+      .filter(line => line !== '')
+      .join('\n\n');
   }).join('\n---\n');
 
-  // Generate markdown format
   markdownText = rows.map(row => {
     return headers
       .map((header, index) => {
         const value = row[index] || '';
-        if (value.trim() === '') return ''; // Skip empty or whitespace-only values
+        if (value.trim() === '') return '';
         return sameLine ? `**${header}**${separator}${value}` : `**${header}**\n${value}`;
       })
-      .filter(line => line !== '') // Remove empty lines
-      .join('\n\n'); // Join non-empty lines with double newline
+      .filter(line => line !== '')
+      .join('\n\n');
   }).join('\n---\n');
 
-  // Display HTML in the formatted window
   formattedData.innerHTML = htmlText;
 }
 
@@ -161,8 +154,8 @@ separatorInput.addEventListener('input', formatData);
 sameLineCheckbox.addEventListener('change', formatData);
 rowsToFormatSelect.addEventListener('change', formatData);
 
-// Copy text to clipboard with feedback
-function copyToClipboard(text, button) {
+// Copy text to clipboard with feedback (for plain text, markdown, HTML)
+function copyTextToClipboard(text, button) {
   const originalText = button.textContent;
   navigator.clipboard.writeText(text).then(() => {
     button.textContent = 'Copied!';
@@ -172,17 +165,38 @@ function copyToClipboard(text, button) {
   });
 }
 
+// Copy formatted content with rich text formatting
+function copyFormattedToClipboard(button) {
+  const originalText = button.textContent;
+  const htmlContent = formattedData.innerHTML;
+  const blob = new Blob([htmlContent], { type: 'text/html' });
+  const data = [new ClipboardItem({ 'text/html': blob })];
+  navigator.clipboard.write(data).then(() => {
+    button.textContent = 'Copied!';
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 1000);
+  }).catch(err => {
+    console.error('Failed to copy formatted content: ', err);
+    alert('Failed to copy formatted content. Please copy manually.');
+  });
+}
+
 // Copy button event listeners
 copyPlainBtn.addEventListener('click', () => {
-  copyToClipboard(plainText, copyPlainBtn);
+  copyTextToClipboard(plainText, copyPlainBtn);
 });
 
 copyMarkdownBtn.addEventListener('click', () => {
-  copyToClipboard(markdownText, copyMarkdownBtn);
+  copyTextToClipboard(markdownText, copyMarkdownBtn);
+});
+
+copyHtmlBtn.addEventListener('click', () => {
+  copyTextToClipboard(htmlText, copyHtmlBtn);
 });
 
 copyFormattedBtn.addEventListener('click', () => {
-  copyToClipboard(htmlText, copyFormattedBtn);
+  copyFormattedToClipboard(copyFormattedBtn);
 });
 
 // Reset the application
