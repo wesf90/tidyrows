@@ -41,7 +41,7 @@ body {
   border: none;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.2);
-  color: #333333; /* Darker text color for readability */
+  color: #ffffff;
   font-family: 'Poppins', sans-serif;
   transition: background 0.3s ease;
 }
@@ -57,7 +57,7 @@ body {
 }
 
 .options select option {
-  color: #333333; /* Ensure dropdown options are readable */
+  color: #333333;
   background: #ffffff;
 }
 
@@ -90,9 +90,27 @@ body {
   background: #ffffff;
   border-radius: 15px;
   padding: 25px;
-  max-height: 60vh;
-  overflow-y: auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.scroll-container {
+  max-height: 60vh; /* Moved from .formatted-window */
+  overflow-y: auto; /* Scrollbar inside this container */
+}
+
+/* Custom scrollbar styling for the inner container */
+.scroll-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
 }
 
 #formatted-data {
@@ -105,19 +123,19 @@ body {
 }
 
 #formatted-data .key-value-pair {
-  margin-bottom: 20px; /* Space between key-value pairs */
+  margin-bottom: 20px;
 }
 
 #formatted-data .key-value-pair strong {
-  font-weight: 700; /* Force bold for keys */
+  font-weight: 700;
   color: #000000;
-  display: block; /* Ensure key is on its own line */
+  display: block;
 }
 
 #formatted-data .key-value-pair span {
-  font-weight: normal; /* Ensure values are not bold */
+  font-weight: normal;
   color: #000000;
-  display: block; /* Ensure value is on its own line */
+  display: block;
 }
 
 .buttons {
@@ -199,7 +217,9 @@ button:hover {
   }
   .formatted-window {
     padding: 20px;
-    max-height: 50vh;
+  }
+  .scroll-container {
+    max-height: 50vh; /* Adjusted for mobile */
   }
   .main-content {
     padding-top: 20px;
