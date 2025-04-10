@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  App Name: TidyRows
+  Author: Wes Foster
+  Author URL: https://wesfoster.com
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TidyRows</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="options">
+    <label>Separator: <input type="text" id="separator" value=": "></label>
+    <label><input type="checkbox" id="same-line"> Same line?</label>
+    <label>Rows to format:
+      <select id="rows-to-format">
+        <option value="last">Last row only</option>
+        <option value="all">All rows</option>
+      </select>
+    </label>
+  </div>
+  <div class="main-content">
+    <div class="container">
+      <div class="instructions" id="instructions">Paste your spreadsheet data here (Ctrl+V)</div>
+      <div class="buttons" style="display: none;">
+        <button id="copy-plain">Copy as Plain Text</button>
+        <button id="copy-markdown">Copy as Markdown</button>
+        <button id="copy-formatted">Copy as Formatted</button>
+        <button id="reset" class="delete-btn">Delete and Start Over</button>
+      </div>
+      <div class="formatted-window" id="formatted-window" style="display: none;">
+        <div id="formatted-data"></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Created by Wes Foster <a href="https://wesfoster.com">wesfoster.com</a></div>
+  <script src="app.js"></script>
+</body>
+</html>
